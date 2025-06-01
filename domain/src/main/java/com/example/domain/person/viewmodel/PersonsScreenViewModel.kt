@@ -1,4 +1,4 @@
-package com.example.matchmaker.screens.viewmodel
+package com.example.domain.person.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

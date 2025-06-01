@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
+import com.example.domain.person.viewmodel.PersonsScreenViewModel
 import com.example.ui.components.PersonItemComposable
 
 @Composable
