@@ -7,15 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
 import com.example.matchmaker.ui.theme.MatchMakerTheme
-import com.example.ui.R
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.person.model.Person
+import com.example.ui.RecyclerViewComponent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +32,8 @@ class MainActivity : ComponentActivity() {
                             "william.jogmgm.harrison@example-pet-store.com"
                         )
                     )
-                    AndroidView(
+                    RecyclerViewComponent(people)
+                    /*AndroidView(
                         factory = { ctx ->
                             RecyclerView(ctx).apply {
                                 layoutManager = LinearLayoutManager(ctx)
@@ -48,14 +43,14 @@ class MainActivity : ComponentActivity() {
                                 setHasFixedSize(true)
                             }
                         },
-                    )
+                    )*/
                 }
             }
         }
     }
 }
 
-class PersonAdapter(private val people: List<Person>) :
+/*class PersonAdapter(private val people: List<Person>) :
     RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
     class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -79,10 +74,11 @@ class PersonAdapter(private val people: List<Person>) :
     }
 
     override fun getItemCount(): Int = people.size
-}
+}*/
 
+/*
 data class Person(
     val name: String,
     val age: Int,
     val email: String
-)
+)*/
