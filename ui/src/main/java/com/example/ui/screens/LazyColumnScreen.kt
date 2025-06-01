@@ -76,9 +76,9 @@ fun LazyColumnScreen(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Text(text = it.name.first.orEmpty() + " |")
+                            Text(text = it.name.first.orEmpty())
                             Text(text = it.name.last.orEmpty() + " |")
-                            Text(text = it.dob?.age.toString())
+                            Text(text = it.dob?.age.toString()
                         }
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
