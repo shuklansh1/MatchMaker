@@ -67,7 +67,7 @@ fun LazyColumnScreen(
                         AsyncImage(
                             it.picture?.large.orEmpty(),
                             contentDescription = null,
-                            contentScale = ContentScale.Fit,
+                            contentScale = ContentScale.FillBounds,
                             modifier = Modifier
                                 .clip(RoundedCornerShape(8.dp))
                                 .fillMaxWidth(0.5f)
