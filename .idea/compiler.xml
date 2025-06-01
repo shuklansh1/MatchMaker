@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="MatchMaker.components" target="21" />
+      <module name="MatchMaker.data" target="21" />
+      <module name="MatchMaker.network" target="21" />
+      <module name="MatchMaker.ui.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
