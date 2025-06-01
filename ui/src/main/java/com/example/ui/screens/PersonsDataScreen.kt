@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
-import com.example.ui.RecyclerViewComponent
+import com.example.ui.components.RecyclerViewComponent
 
 @Composable
 fun PersonsDataRecyclerViewScreen(

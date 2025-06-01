@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
+import com.example.ui.components.PersonItemComposable
 import com.example.ui.navigation.LazyColumnScreen
 import kotlin.collections.orEmpty
 
@@ -61,51 +62,15 @@ fun LazyColumnScreen(
         ) {
             LazyColumn {
                 items(responseDataState.value?.results.orEmpty()) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AsyncImage(
-                            it.picture?.large.orEmpty(),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
-                                .fillMaxWidth(0.5f)
-                                .height(240.dp)
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(text = it.name.first.orEmpty())
-                            Text(text = it.name.last.orEmpty() + " |")
-                            Text(text = it.dob?.age.toString())
+                    PersonItemComposable(
+                        it,
+                        onAccept = {
+                            viewModel.likeUser(it)
+                        },
+                        onReject = {
+                            viewModel.rejectUser(it)
                         }
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Button(
-                                {
-                                    viewModel.likeUser(it)
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Green
-                                )
-                            ) {
-                                Text("Accept", color = Color.Black)
-                            }
-                            Button(
-                                {
-                                    viewModel.rejectUser(it)
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Red
-                                )
-                            ) {
-                                Text("Reject", color = Color.White)
-                            }
-                        }
-                    }
+                    )
                 }
             }
         }

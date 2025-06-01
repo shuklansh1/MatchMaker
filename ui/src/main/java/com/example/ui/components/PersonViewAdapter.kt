@@ -1,4 +1,4 @@
-package com.example.ui
+package com.example.ui.components
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.person.model.Result
+import com.example.ui.R
 import com.squareup.picasso.Picasso
 
 class PersonAdapter(private val people: MutableList<Result>) :
