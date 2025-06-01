@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.person.model.PersonModel
+import com.example.domain.person.model.Result
 
-class PersonAdapter(private val people: List<PersonModel>) :
+class PersonAdapter(private val people: List<Result>) :
     RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
     class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,8 +26,8 @@ class PersonAdapter(private val people: List<PersonModel>) :
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         val person = people[position]
-        holder.name.text = person.name
-        holder.age.text = "Age: ${person.age}"
+        holder.name.text = person.name.first
+        holder.age.text = "Age: ${person.dob?.age}"
     }
 
     override fun getItemCount(): Int = people.size

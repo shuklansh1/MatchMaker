@@ -7,8 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import com.example.domain.person.model.Dob
+import com.example.domain.person.model.Name
 import com.example.matchmaker.ui.theme.MatchMakerTheme
-import com.example.domain.person.model.PersonModel
+import com.example.domain.person.model.Result
 import com.example.ui.RecyclerViewComponent
 
 class MainActivity : ComponentActivity() {
@@ -19,18 +21,30 @@ class MainActivity : ComponentActivity() {
             MatchMakerTheme {
                 Column(modifier = Modifier.fillMaxSize()) {
                     val people = listOf(
-                        PersonModel("John Doe", 30, "james.wilson@example-pet-store.com"),
-                        PersonModel("John Poe", 31, "william.jogh.harrison@example-pet-store.com"),
-                        PersonModel(
-                            "John Croe",
-                            37,
-                            "william.jogmgm.harrison@example-pet-store.com"
+                        Result(
+                            Name("John Doe"),
+                            Dob(12)
                         ),
-                        PersonModel(
-                            "John Shmroe",
-                            37,
-                            "william.jogmgm.harrison@example-pet-store.com"
-                        )
+                        Result(
+                            Name("Jane Doe"),
+                            Dob(22)
+                        ),
+                        Result(
+                            Name("Peter Doe"),
+                            Dob(32)
+                        ),
+                        Result(
+                            Name("Edward Doe"),
+                            Dob(18)
+                        ),
+                        Result(
+                            Name("Joseph Doe"),
+                            Dob(28)
+                        ),
+                        Result(
+                            Name("Collin Doe"),
+                            Dob(25)
+                        ),
                     )
                     RecyclerViewComponent(people)
                 }
