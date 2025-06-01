@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation(project (":domain"))
 
+    implementation("com.squareup.picasso:picasso:2.8")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.foundation.android)

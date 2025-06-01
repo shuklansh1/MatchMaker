@@ -3,9 +3,11 @@ package com.example.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.person.model.Result
+import com.squareup.picasso.Picasso
 
 class PersonAdapter(private val people: MutableList<Result>) :
     RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
@@ -13,6 +15,7 @@ class PersonAdapter(private val people: MutableList<Result>) :
     class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.tvName)
         val age: TextView = itemView.findViewById(R.id.tvAge)
+        val image: ImageView = itemView.findViewById(R.id.ivProfile)
     }
 
     override fun onCreateViewHolder(
@@ -26,8 +29,16 @@ class PersonAdapter(private val people: MutableList<Result>) :
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         val person = people[position]
+        val imageView = holder.image.findViewById<ImageView>(R.id.ivProfile)
         holder.name.text = person.name.first
         holder.age.text = "Age: ${person.dob?.age}"
+        val imageUrl = person.picture?.medium.orEmpty()
+
+        Picasso.get()
+            .load(imageUrl)
+            //.placeholder(R.drawable.placeholder) // optional placeholder image
+            //.error(R.drawable.error_image)       // optional error image
+            .into(imageView)
     }
 
     override fun getItemCount(): Int = people.size

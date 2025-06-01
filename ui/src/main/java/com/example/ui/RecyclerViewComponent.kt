@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.person.model.PersonResponseModel
 import com.example.domain.person.model.Result
 
 @Composable
