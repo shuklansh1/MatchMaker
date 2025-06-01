@@ -32,7 +32,10 @@ class PersonAdapter(private val people: MutableList<Result>) :
         val person = people[position]
         val imageView = holder.image.findViewById<ImageView>(R.id.ivProfile)
         holder.name.text = person.name.first
-        holder.age.text = "Age: ${person.dob?.age}"
+        holder.age.text = buildString {
+            append("Age: ")
+            append(person.dob?.age)
+        }
         val imageUrl = person.picture?.large.orEmpty()
 
         Picasso.get()

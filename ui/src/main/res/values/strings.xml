@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="view_recyclerview_screen">View RecyclerView Screen</string>
+    <string name="view_lazycolumn_screen">View LazyColumn Screen</string>
+    <string name="reject">Reject</string>
+    <string name="accept">Accept</string>
+    <string name="age">Age: %1$s</string>
+</resources>

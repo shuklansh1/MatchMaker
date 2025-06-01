@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.domain.person.model.Result
+import com.example.ui.R
 
 @Composable
 fun PersonItemComposable(
@@ -56,7 +58,7 @@ fun PersonItemComposable(
                     containerColor = Color.Green
                 )
             ) {
-                Text("Accept", color = Color.Black)
+                Text(stringResource(R.string.accept), color = Color.Black)
             }
             Button(
                 {
@@ -66,7 +68,7 @@ fun PersonItemComposable(
                     containerColor = Color.Red
                 )
             ) {
-                Text("Reject", color = Color.White)
+                Text(stringResource(R.string.reject), color = Color.White)
             }
         }
     }
