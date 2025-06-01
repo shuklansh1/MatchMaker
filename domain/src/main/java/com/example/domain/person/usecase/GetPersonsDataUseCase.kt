@@ -13,4 +13,8 @@ class GetPersonsDataUseCase @Inject constructor(
     suspend fun upsertMatchPerson(match: List<Result>) = personRepository.upsertMatchPerson(match)
 
     suspend fun getAllDbMatchPerson() = personRepository.getAllDbMatchPerson()
+
+    suspend fun removePersonFromDb(personToRemove: Result) = personRepository.removePersonFromDb(personToRemove)
+
+    suspend fun addPersonToDb(personToAdd: Result) = personRepository.addPersonToDb(personToAdd)
 }

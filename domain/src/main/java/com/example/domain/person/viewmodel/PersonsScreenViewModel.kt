@@ -2,7 +2,6 @@ package com.example.matchmaker.screens.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.local.model.ResultsModel
 import com.example.domain.person.model.PersonResponseModel
 import com.example.domain.person.model.Result
 import com.example.domain.person.usecase.GetPersonsDataUseCase
@@ -16,10 +15,6 @@ import javax.inject.Inject
 class PersonsScreenViewModel @Inject constructor(
     private val personsUseCase: GetPersonsDataUseCase
 ) : ViewModel() {
-    private var _dbResponseList =
-        MutableStateFlow<List<ResultsModel>?>(emptyList())
-    val dbResponseListState = _dbResponseList.asStateFlow()
-
     private var _responseList =
         MutableStateFlow<PersonResponseModel?>(PersonResponseModel(mutableListOf()))
     val responseDataState = _responseList.asStateFlow()
@@ -29,17 +24,6 @@ class PersonsScreenViewModel @Inject constructor(
 
     private var _rejectedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
     val rejectedUsersDataState = _rejectedUsers.asStateFlow()
-
-    fun fetchPersonsDataFromDatabase() {
-        viewModelScope.launch {
-            runCatching { personsUseCase.getAllDbMatchPerson() }
-                .fold({
-                    _dbResponseList.value = it
-                }, {
-                    _dbResponseList.emit(null)
-                })
-        }
-    }
 
     fun fetchPersonsData() {
         viewModelScope.launch {
@@ -60,11 +44,11 @@ class PersonsScreenViewModel @Inject constructor(
                     } else {
                         _responseList.value = it
                     }
-                    if (_responseList.value?.results.orEmpty().isNotEmpty()) {
+                    /*if (_responseList.value?.results.orEmpty().isNotEmpty()) {
                         personsUseCase.upsertMatchPerson(
                             _responseList.value?.results.orEmpty()
                         )
-                    }
+                    }*/
                 }, {
                     _responseList.emit(null)
                 })
@@ -84,6 +68,15 @@ class PersonsScreenViewModel @Inject constructor(
                 _responseList.value?.copy(
                     results = updatedResults
                 )
+            addPersonToDb(user)
+            // fetch new data
+            fetchPersonsData()
+        }
+    }
+
+    fun addPersonToDb(user: Result) {
+        viewModelScope.launch {
+            personsUseCase.addPersonToDb(user)
         }
     }
 
@@ -100,6 +93,7 @@ class PersonsScreenViewModel @Inject constructor(
                 _responseList.value?.copy(
                     results = updatedResults
                 )
+            fetchPersonsData()
         }
     }
 }

@@ -2,12 +2,11 @@ package com.example.data.person.repository
 
 import com.example.data.ApiClient
 import com.example.data.person.mapper.toModel
+import com.example.domain.common.toResultsDbModel
+import com.example.domain.common.toResultsModel
 import com.example.domain.local.dao.MatchMateDao
 import com.example.domain.local.model.ResultsModel
-import com.example.domain.person.model.Dob
-import com.example.domain.person.model.Name
 import com.example.domain.person.model.PersonResponseModel
-import com.example.domain.person.model.Picture
 import com.example.domain.person.model.Result
 import com.example.domain.person.repository.PersonDataRepository
 import javax.inject.Inject
@@ -20,22 +19,11 @@ class PersonDataRepositoryImpl @Inject constructor(
         return apiClient.getPersonsList().toModel()
     }
 
-    override suspend fun getMatchedPersonById(id: Int?): Result? {
+    override suspend fun getMatchedPersonById(id: String?): Result? {
         val matchedData = matchMate.getMatchedPersonById(
             id
         )
-        return Result(
-            name = Name(
-                first = matchedData?.firstName.orEmpty(),
-                last = matchedData?.lastName.orEmpty(),
-            ),
-            picture = Picture(
-                large = matchedData?.image.orEmpty(),
-            ),
-            dob = Dob(
-                age = matchedData?.age ?: 0,
-            )
-        )
+        return matchedData?.toResultsModel()
     }
 
     override suspend fun deleteAllMatchPerson() {
@@ -45,13 +33,12 @@ class PersonDataRepositoryImpl @Inject constructor(
     override suspend fun upsertMatchPerson(match: List<Result>) {
         matchMate.upsertAllPeople(
             match.filter {
-                it.id?.value?.toIntOrNull() != null
+                it.picture?.large != null
             }.map {
                 ResultsModel(
-                    id = it.id?.value?.toIntOrNull()!!,
                     firstName = it.name.first,
                     lastName = it.name.last.orEmpty(),
-                    image = it.picture?.large.orEmpty(),
+                    image = it.picture?.large!!,
                     age = it.dob?.age ?: 0,
                 )
             }
@@ -60,5 +47,18 @@ class PersonDataRepositoryImpl @Inject constructor(
 
     override suspend fun getAllDbMatchPerson(): List<ResultsModel> {
         return matchMate.getAllMatchPerson()
+    }
+
+    override suspend fun removePersonFromDb(person: Result) {
+        return matchMate.removePersonFromDb(person.toResultsDbModel().image)
+    }
+
+    override suspend fun addPersonToDb(person: Result) {
+        matchMate.addPersonToDb(
+            person.toResultsDbModel().firstName,
+            person.toResultsDbModel().lastName,
+            person.toResultsDbModel().image,
+            person.toResultsDbModel().age,
+        )
     }
 }

@@ -16,18 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.domain.person.model.Dob
-import com.example.domain.person.model.Name
-import com.example.domain.person.model.Picture
-import com.example.domain.person.model.Result
-import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
+import com.example.domain.common.toResultsModel
+import com.example.domain.local.viewmodel.LocalDataScreenViewmodel
 import com.example.ui.components.PersonItemComposable
-import kotlin.collections.orEmpty
 
 @Composable
 fun LocalStoredUsersScreen(
     navController: NavHostController,
-    viewModel: PersonsScreenViewModel = hiltViewModel()
+    viewModel: LocalDataScreenViewmodel = hiltViewModel()
 ) {
     BackHandler {
         navController.popBackStack()
@@ -39,7 +35,7 @@ fun LocalStoredUsersScreen(
         navController.popBackStack()
     }
 
-    LaunchedEffect(localResponseDataState.value?.size) {
+    LaunchedEffect(Unit) {
         viewModel.fetchPersonsDataFromDatabase()
     }
     Scaffold(
@@ -54,26 +50,15 @@ fun LocalStoredUsersScreen(
         ) {
             LazyColumn {
                 items(localResponseDataState.value?.map {
-                    Result(
-                        name = Name(
-                            first = it.firstName,
-                            last = it.lastName
-                        ),
-                        picture = Picture(
-                            large = it.image
-                        ),
-                        dob = Dob(
-                            age = it.age
-                        )
-                    )
+                    it.toResultsModel()
                 }.orEmpty()) {
                     PersonItemComposable(
                         it,
                         onAccept = {
-                            viewModel.likeUser(it)
+                            // i don't know the behaviour to be added here :P
                         },
                         onReject = {
-                            viewModel.rejectUser(it)
+                            viewModel.removeUserFromLocalDb(it)
                         }
                     )
                 }
