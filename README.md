@@ -11,7 +11,7 @@
   -> separation of concern + easy to add multiple features in the future.
 
 ○ Match score logic description
-  -> using formaula for determining compatibility.
+  -> using formaula for determining compatibility. (research suggests that marrying in the mid-to-late 20s or early 30s may offer advantages like greater marital satisfaction and lower divorce rates.)
 
 ○ Offline and error handling strategy
   -> functionality to add liked users to Db with primary key
