@@ -12,11 +12,12 @@ import com.example.domain.person.model.Result
 
 @Composable
 fun RecyclerViewComponent(
-    people: List<Result>
+    people: List<Result>,
+    onClickAccept: (Result) -> Unit
 ) {
     val viewAdapter = remember {
         mutableStateOf(
-            PersonAdapter(mutableListOf())
+            PersonAdapter(mutableListOf(), onClickAccept)
         )
     }
     AndroidView(

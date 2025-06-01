@@ -37,7 +37,11 @@ fun PersonsDataRecyclerViewScreen(
                 .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecyclerViewComponent(responseDataState.value?.results.orEmpty())
+            RecyclerViewComponent(
+                responseDataState.value?.results.orEmpty()
+            ) {
+                viewModel.likeUser(it)
+            }
         }
     }
 }
