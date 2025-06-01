@@ -92,7 +92,7 @@ fun LazyColumnScreen(
                                     containerColor = Color.Green
                                 )
                             ) {
-                                Text("Accept", color = Color.White)
+                                Text("Accept", color = Color.Black)
                             }
                             Button(
                                 {
