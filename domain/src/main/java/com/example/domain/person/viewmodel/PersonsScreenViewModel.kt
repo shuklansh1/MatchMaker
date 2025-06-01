@@ -14,8 +14,9 @@ import javax.inject.Inject
 class PersonsScreenViewModel @Inject constructor(
     private val personsUseCase: GetPersonsDataUseCase
 ) : ViewModel() {
+
     private var _responseList = MutableStateFlow<PersonResponseModel?>(null)
-    var responseDataState = _responseList.asStateFlow()
+    val responseDataState = _responseList.asStateFlow()
 
     fun fetchPersonsData() {
         viewModelScope.launch {
