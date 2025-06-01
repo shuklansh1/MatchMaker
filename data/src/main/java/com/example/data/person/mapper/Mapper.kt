@@ -8,16 +8,14 @@ import com.example.data.person.dto.Name
 import com.example.data.person.dto.PersonResponse
 import com.example.data.person.dto.Result
 import com.example.domain.person.model.Coordinates
-import com.example.domain.person.model.Login
 import com.example.domain.person.model.PersonResponseModel
 import com.example.domain.person.model.Picture
-import com.example.domain.person.model.Registered
 import com.example.domain.person.model.Street
 import com.example.domain.person.model.Timezone
 
 fun PersonResponse.toModel() = PersonResponseModel(
     info = info.toModel(),
-    results = results.map { it.toModel() }
+    results = results.map { it.toModel() }.toMutableList()
 )
 
 fun Info.toModel() = com.example.domain.person.model.Info(

@@ -16,28 +16,34 @@ class PersonsScreenViewModel @Inject constructor(
     private val personsUseCase: GetPersonsDataUseCase
 ) : ViewModel() {
 
-    private var _responseList = MutableStateFlow<PersonResponseModel?>(null)
+    private var _responseList =
+        MutableStateFlow<PersonResponseModel?>(PersonResponseModel(mutableListOf()))
     val responseDataState = _responseList.asStateFlow()
 
-    private var _likedUsers = MutableStateFlow<MutableList<Result>?>(null)
+    private var _likedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
     val likedUsersDataState = _likedUsers.asStateFlow()
 
-    private var _rejectedUsers = MutableStateFlow<MutableList<Result>?>(null)
+    private var _rejectedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
     val rejectedUsersDataState = _rejectedUsers.asStateFlow()
 
     fun fetchPersonsData() {
         viewModelScope.launch {
             runCatching { personsUseCase.invoke() }
                 .fold({
-                    val data = it
                     if (!_likedUsers.value.isNullOrEmpty() || !_rejectedUsers.value.isNullOrEmpty()) {
-                        val updatedData = data.copy(
-                            results = data.results.filterNot {
-                                _likedUsers.value?.contains(it) == true &&
-                                        _rejectedUsers.value?.contains(it) == true
-                            }
+                        val updatedResults = _responseList.value?.results
+                        updatedResults?.addAll(
+                            it.results
                         )
-                        _responseList.value = updatedData
+                        updatedResults?.removeAll {
+                            _likedUsers.value?.contains(it) == true &&
+                                    _rejectedUsers.value?.contains(it) == true
+                        }
+                        _responseList.value = _responseList.value?.copy(
+                            results = updatedResults.orEmpty().toMutableList()
+                        ) ?: it
+                    } else {
+                        _responseList.value = it
                     }
                 }, {
                     _responseList.emit(null)
@@ -52,9 +58,11 @@ class PersonsScreenViewModel @Inject constructor(
             } else {
                 _likedUsers.value = mutableListOf(user)
             }
+            var updatedResults = _responseList.value?.results.orEmpty().toMutableList()
+            updatedResults.removeAll { it == user }
             _responseList.value =
                 _responseList.value?.copy(
-                    results = _responseList.value?.results?.filter { it != user }.orEmpty()
+                    results = updatedResults
                 )
         }
     }
@@ -66,9 +74,11 @@ class PersonsScreenViewModel @Inject constructor(
             } else {
                 _rejectedUsers.value = mutableListOf(user)
             }
+            var updatedResults = _responseList.value?.results.orEmpty().toMutableList()
+            updatedResults.removeAll { it == user }
             _responseList.value =
                 _responseList.value?.copy(
-                    results = _responseList.value?.results?.filter { it != user }.orEmpty()
+                    results = updatedResults
                 )
         }
     }

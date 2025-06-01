@@ -44,7 +44,7 @@ fun LazyColumnScreen(
         navController.popBackStack()
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(responseDataState.value?.results?.size) {
         viewModel.fetchPersonsData()
     }
     Scaffold(
