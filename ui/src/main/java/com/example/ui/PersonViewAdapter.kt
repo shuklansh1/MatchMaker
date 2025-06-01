@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.person.model.Result
 
-class PersonAdapter(private val people: List<Result>) :
+class PersonAdapter(private val people: MutableList<Result>) :
     RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
     class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,4 +31,10 @@ class PersonAdapter(private val people: List<Result>) :
     }
 
     override fun getItemCount(): Int = people.size
+
+    fun updatePeople(people: List<Result>) {
+        this.people.clear()
+        this.people.addAll(people)
+        notifyDataSetChanged()
+    }
 }

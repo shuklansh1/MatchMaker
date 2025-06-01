@@ -3,7 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="MatchMaker.components" target="21" />
-      <module name="MatchMaker.network" target="21" />
       <module name="MatchMaker.ui.test" target="11" />
     </bytecodeTargetLevel>
   </component>

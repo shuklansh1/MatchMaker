@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
 import com.example.ui.RecyclerViewComponent
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun PersonsDataScreen(

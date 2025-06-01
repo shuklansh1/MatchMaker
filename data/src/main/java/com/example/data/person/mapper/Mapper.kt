@@ -69,25 +69,9 @@ fun Result.toModel() = com.example.domain.person.model.Result(
     email = email,
     gender = gender,
     id = id?.toModel(),
-    location = location?.toModel(),
-    login = Login(
-        md5 = login?.md5,
-        password = login?.password,
-        salt = login?.salt,
-        sha1 = login?.sha1,
-        sha256 = login?.sha256,
-        username = login?.username,
-        uuid = login?.uuid
-    ),
-    nat = nat,
-    phone = phone,
     picture = Picture(
         large = picture?.large,
         medium = picture?.medium,
         thumbnail = picture?.thumbnail
-    ),
-    registered = Registered(
-        age = registered?.age,
-        date = registered?.date
     ),
 )

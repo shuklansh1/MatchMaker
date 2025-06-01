@@ -1,5 +1,8 @@
 package com.example.data.person.dto
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Result(
     val name: Name,
     val dob: Dob? = null,
@@ -7,10 +10,5 @@ data class Result(
     val email: String? = null,
     val gender: String? = null,
     val id: Id? = null,
-    val location: Location? = null,
-    val login: Login? = null,
-    val nat: String? = null,
-    val phone: String? = null,
     val picture: Picture? = null,
-    val registered: Registered? = null,
 )

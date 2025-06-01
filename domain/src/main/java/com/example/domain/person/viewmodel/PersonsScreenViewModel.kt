@@ -3,7 +3,6 @@ package com.example.matchmaker.screens.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.person.model.PersonResponseModel
-import com.example.domain.person.repository.PersonDataRepository
 import com.example.domain.person.usecase.GetPersonsDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

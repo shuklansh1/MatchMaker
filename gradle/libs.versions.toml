@@ -43,6 +43,7 @@ compileSdk = "35"
 minSdk = "26"
 targetSdk = "34"
 jvmTarget = "21"
+material = "1.12.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -115,6 +116,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraVideo" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 imps = ["core-ktx", "hiltAndroid"]

@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
     apply { id("com.google.dagger.hilt.android") }
-
-    kotlin("plugin.serialization") version "2.1.20"
 }
 
 android {
@@ -51,6 +49,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":ui"))
+    implementation(project(":network"))
 
     implementation(libs.bundles.compose)
     implementation(libs.multidex)
