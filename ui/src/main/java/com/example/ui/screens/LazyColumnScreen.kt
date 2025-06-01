@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,7 +51,9 @@ fun LazyColumnScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
         ) {
@@ -62,24 +66,28 @@ fun LazyColumnScreen(
                         AsyncImage(
                             it.picture?.large.orEmpty(),
                             contentDescription = null,
-                            modifier = Modifier.fillMaxWidth(0.5f).height(240.dp)
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .height(240.dp)
+                                .clip(RoundedCornerShape(8.dp))
                         )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Text(text = it.name.first.orEmpty())
-                            Text(text = it.name.last.orEmpty())
+                            Text(text = it.name.first.orEmpty() + " |")
+                            Text(text = it.name.last.orEmpty() + " |")
+                            Text(text = it.dob?.age.toString())
                         }
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Button({
-
+                                viewModel.likeUser(it)
                             }) {
-                                Text("Accept",  color = Color.Green)
+                                Text("Accept", color = Color.Green)
                             }
                             Button({
-
+                                viewModel.rejectUser(it)
                             }) {
                                 Text("Reject", color = Color.Red)
                             }
