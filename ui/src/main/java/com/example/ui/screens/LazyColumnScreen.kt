@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -66,10 +67,11 @@ fun LazyColumnScreen(
                         AsyncImage(
                             it.picture?.large.orEmpty(),
                             contentDescription = null,
+                            contentScale = ContentScale.Fit,
                             modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
                                 .fillMaxWidth(0.5f)
                                 .height(240.dp)
-                                .clip(RoundedCornerShape(8.dp))
                         )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
