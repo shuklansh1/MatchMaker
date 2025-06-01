@@ -49,7 +49,7 @@ fun LazyColumnScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.padding(it),
+            modifier = Modifier.fillMaxSize().padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
         ) {
