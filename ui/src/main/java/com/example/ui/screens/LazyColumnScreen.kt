@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,20 +79,30 @@ fun LazyColumnScreen(
                         ) {
                             Text(text = it.name.first.orEmpty())
                             Text(text = it.name.last.orEmpty() + " |")
-                            Text(text = it.dob?.age.toString()
+                            Text(text = it.dob?.age.toString())
                         }
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Button({
-                                viewModel.likeUser(it)
-                            }) {
-                                Text("Accept", color = Color.Green)
+                            Button(
+                                {
+                                    viewModel.likeUser(it)
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Green
+                                )
+                            ) {
+                                Text("Accept", color = Color.White)
                             }
-                            Button({
-                                viewModel.rejectUser(it)
-                            }) {
-                                Text("Reject", color = Color.Red)
+                            Button(
+                                {
+                                    viewModel.rejectUser(it)
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Red
+                                )
+                            ) {
+                                Text("Reject", color = Color.White)
                             }
                         }
                     }
