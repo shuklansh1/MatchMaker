@@ -3,10 +3,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     apply { id("com.google.dagger.hilt.android") }
-    kotlin("plugin.serialization") version "2.1.20"
 }
+
 android {
-    namespace = "com.example.domain"
+    namespace = "com.example.data"
     compileSdk = 35
 
     defaultConfig {
@@ -35,11 +35,12 @@ android {
 }
 
 dependencies {
+    implementation(project (":domain"))
+
     implementation(libs.bundles.imps)
-    implementation(libs.camera.video)
     ksp(libs.bundles.ksp)
-    implementation(libs.bundles.lifecycle)
-    implementation(libs.kotlinx.serialization.json)
-    testImplementation(libs.bundles.unitTest)
-    testImplementation(libs.bundles.appUnitTest)
+    implementation(libs.retrofit)
+
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.moshi)
 }

@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.ksp)
+    apply { id("com.google.dagger.hilt.android") }
+
+    kotlin("plugin.serialization") version "2.1.20"
 }
 
 android {
@@ -34,21 +38,20 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(project (":domain"))
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.foundation.android)
+    ksp(libs.bundles.ksp)
+    implementation(libs.bundles.imps)
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.coil)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.recyclerview)
-    implementation(project(":domain"))
+
+
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.appcompat)
+    androidTestImplementation(libs.junitExt)
+    androidTestImplementation(libs.espresso.core)
 }

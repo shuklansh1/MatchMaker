@@ -23,3 +23,4 @@ rootProject.name = "MatchMaker"
 include(":app")
 include(":ui")
 include(":domain")
+include(":data")
