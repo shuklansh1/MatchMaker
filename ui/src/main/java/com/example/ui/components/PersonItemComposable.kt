@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.domain.common.isGoodMatch
 import com.example.domain.person.model.Result
 import com.example.ui.R
 
@@ -41,10 +42,15 @@ fun PersonItemComposable(
                 .height(240.dp)
         )
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Text(text = item.name.first.orEmpty())
-            Text(text = item.name.last.orEmpty() + " |")
+            if (
+                item.isGoodMatch() == true
+            ) {
+                Text("⭐")
+            }
+            Text(text = "${item.name.first.orEmpty()} ${item.name.last.orEmpty()}")
+            Text(" | ")
             Text(text = item.dob?.age.toString())
         }
         Row(
