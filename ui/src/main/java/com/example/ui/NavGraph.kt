@@ -7,9 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.ui.navigation.Home
 import com.example.ui.navigation.LazyColumnScreen
+import com.example.ui.navigation.LocalStoredUsers
 import com.example.ui.navigation.RecyclerViewScreen
 import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.LazyColumnScreen
+import com.example.ui.screens.LocalStoredUsersScreen
 import com.example.ui.screens.PersonsDataRecyclerViewScreen
 
 @Composable
@@ -32,6 +34,12 @@ fun NavGraph(appNavController: NavHostController) {
 
         composable<LazyColumnScreen> {
             LazyColumnScreen(
+                navController = appNavController
+            )
+        }
+
+        composable<LocalStoredUsers> {
+            LocalStoredUsersScreen(
                 navController = appNavController
             )
         }

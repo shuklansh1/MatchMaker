@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface MatchMateDao {
     @Upsert
     @Transaction
-    suspend fun upsertMatchPerson(match: List<ResultsModel>)
+    suspend fun upsertAllPeople(match: List<ResultsModel>)
 
     @Query("DELETE FROM results_table")
     @Transaction

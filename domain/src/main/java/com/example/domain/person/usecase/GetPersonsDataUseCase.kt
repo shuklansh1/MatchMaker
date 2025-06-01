@@ -11,4 +11,6 @@ class GetPersonsDataUseCase @Inject constructor(
     suspend operator fun invoke(): PersonResponseModel = personRepository.getPersonsData()
 
     suspend fun upsertMatchPerson(match: List<Result>) = personRepository.upsertMatchPerson(match)
+
+    suspend fun getAllDbMatchPerson() = personRepository.getAllDbMatchPerson()
 }

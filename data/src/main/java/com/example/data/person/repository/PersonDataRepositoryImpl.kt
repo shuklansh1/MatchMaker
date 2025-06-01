@@ -43,10 +43,12 @@ class PersonDataRepositoryImpl @Inject constructor(
     }
 
     override suspend fun upsertMatchPerson(match: List<Result>) {
-        matchMate.upsertMatchPerson(
-            match.map {
+        matchMate.upsertAllPeople(
+            match.filter {
+                it.id?.value?.toIntOrNull() != null
+            }.map {
                 ResultsModel(
-                    id = 0,
+                    id = it.id?.value?.toIntOrNull()!!,
                     firstName = it.name.first,
                     lastName = it.name.last.orEmpty(),
                     image = it.picture?.large.orEmpty(),
@@ -54,5 +56,9 @@ class PersonDataRepositoryImpl @Inject constructor(
                 )
             }
         )
+    }
+
+    override suspend fun getAllDbMatchPerson(): List<ResultsModel> {
+        return matchMate.getAllMatchPerson()
     }
 }

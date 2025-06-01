@@ -2,6 +2,7 @@
 <resources>
     <string name="view_recyclerview_screen">View RecyclerView Screen</string>
     <string name="view_lazycolumn_screen">View LazyColumn Screen</string>
+    <string name="view_local_db_column_screen">View Offline Data Screen</string>
     <string name="reject">Reject</string>
     <string name="accept">Accept</string>
     <string name="age">Age: %1$s</string>

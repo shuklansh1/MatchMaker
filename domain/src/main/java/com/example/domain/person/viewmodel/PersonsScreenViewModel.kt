@@ -2,6 +2,7 @@ package com.example.matchmaker.screens.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.local.model.ResultsModel
 import com.example.domain.person.model.PersonResponseModel
 import com.example.domain.person.model.Result
 import com.example.domain.person.usecase.GetPersonsDataUseCase
@@ -15,6 +16,9 @@ import javax.inject.Inject
 class PersonsScreenViewModel @Inject constructor(
     private val personsUseCase: GetPersonsDataUseCase
 ) : ViewModel() {
+    private var _dbResponseList =
+        MutableStateFlow<List<ResultsModel>?>(emptyList())
+    val dbResponseListState = _dbResponseList.asStateFlow()
 
     private var _responseList =
         MutableStateFlow<PersonResponseModel?>(PersonResponseModel(mutableListOf()))
@@ -25,6 +29,17 @@ class PersonsScreenViewModel @Inject constructor(
 
     private var _rejectedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
     val rejectedUsersDataState = _rejectedUsers.asStateFlow()
+
+    fun fetchPersonsDataFromDatabase() {
+        viewModelScope.launch {
+            runCatching { personsUseCase.getAllDbMatchPerson() }
+                .fold({
+                    _dbResponseList.value = it
+                }, {
+                    _dbResponseList.emit(null)
+                })
+        }
+    }
 
     fun fetchPersonsData() {
         viewModelScope.launch {

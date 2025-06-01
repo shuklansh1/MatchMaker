@@ -10,3 +10,6 @@ data object LazyColumnScreen
 
 @Serializable
 data object Home
+
+@Serializable
+data object LocalStoredUsers
