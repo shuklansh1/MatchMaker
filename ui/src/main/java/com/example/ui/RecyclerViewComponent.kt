@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.person.model.Person
+import com.example.domain.person.model.PersonModel
 
 @Composable
 fun RecyclerViewComponent(
-    people: List<Person>
+    people: List<PersonModel>
 ) {
     AndroidView(
         factory = { ctx ->

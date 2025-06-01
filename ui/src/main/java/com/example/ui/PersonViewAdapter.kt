@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.person.model.Person
+import com.example.domain.person.model.PersonModel
 
-class PersonAdapter(private val people: List<Person>) :
+class PersonAdapter(private val people: List<PersonModel>) :
     RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
     class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
