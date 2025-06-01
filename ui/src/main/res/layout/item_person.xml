@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/ivProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="12dp" />
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="12dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvName"
@@ -26,4 +26,28 @@
         android:layout_height="wrap_content"
         android:text="Age"
         android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnTick"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:text="✔"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnCross"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:text="x"
+            android:textSize="24sp" />
+    </LinearLayout>
 </LinearLayout>

@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import com.example.matchmaker.screens.PersonsDataRecyclerViewScreen
 import com.example.matchmaker.ui.theme.MatchMakerTheme
-import com.example.matchmaker.screens.PersonsDataScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MatchMakerTheme {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    PersonsDataScreen()
+                    PersonsDataRecyclerViewScreen()
                 }
             }
         }

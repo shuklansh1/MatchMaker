@@ -7,13 +7,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.matchmaker.screens.viewmodel.PersonsScreenViewModel
 import com.example.ui.RecyclerViewComponent
 
 @Composable
-fun PersonsDataScreen(
+fun PersonsDataRecyclerViewScreen(
     viewModel: PersonsScreenViewModel = hiltViewModel()
 ) {
     val responseDataState = viewModel.responseDataState.collectAsState()
@@ -23,7 +24,12 @@ fun PersonsDataScreen(
     }
 
     Scaffold {
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             RecyclerViewComponent(responseDataState.value?.results.orEmpty())
         }
     }
