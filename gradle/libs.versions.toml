@@ -31,12 +31,12 @@ espresso-core = "3.6.1"
 ksp = "2.1.20-2.0.0"
 app-review = "2.0.2"
 kotlinx-coroutines-test = "1.7.3"
-constraintlayout = "2.2.1"
 kotest = "5.4.1"
 moshi = "1.15.0"
 retrofit-moshi-converter = "2.9.0"
 foundationAndroid = "1.8.1"
 cameraVideo = "1.4.2"
+roomRuntime = "2.7.1"
 
 # consts
 compileSdk = "35"
@@ -109,7 +109,9 @@ lifecycle-runtime-testing = { module = "androidx.lifecycle:lifecycle-runtime-tes
 junitExt = { module = "androidx.test.ext:junit", version.ref = "junitExt" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }

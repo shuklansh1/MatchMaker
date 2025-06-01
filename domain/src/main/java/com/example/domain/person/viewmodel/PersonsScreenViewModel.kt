@@ -45,6 +45,11 @@ class PersonsScreenViewModel @Inject constructor(
                     } else {
                         _responseList.value = it
                     }
+                    if (_responseList.value?.results.orEmpty().isNotEmpty()) {
+                        personsUseCase.upsertMatchPerson(
+                            _responseList.value?.results.orEmpty()
+                        )
+                    }
                 }, {
                     _responseList.emit(null)
                 })

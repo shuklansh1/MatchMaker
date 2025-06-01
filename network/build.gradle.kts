@@ -44,7 +44,6 @@ dependencies {
     androidTestImplementation(libs.junitExt)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.bundles.imps)
-
     implementation(libs.retrofit)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit.moshi.converter)
