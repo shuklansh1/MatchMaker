@@ -1,13 +1,13 @@
 package com.example.data.di
 
+import com.example.data.person.repository.LocalStorageRepositoryImpl
 import com.example.data.person.repository.PersonDataRepositoryImpl
+import com.example.domain.local.repository.LocalStorageRepository
 import com.example.domain.person.repository.PersonDataRepository
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -17,4 +17,9 @@ interface RepositoryModule {
     fun providesPersonDataRepository(
         personDataRepositoryImpl: PersonDataRepositoryImpl
     ): PersonDataRepository
+
+    @Binds
+    fun providesLocalStorageRepository(
+        personDataRepositoryImpl:LocalStorageRepositoryImpl
+    ): LocalStorageRepository
 }

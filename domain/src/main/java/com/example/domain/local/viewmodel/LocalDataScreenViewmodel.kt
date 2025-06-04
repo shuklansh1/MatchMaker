@@ -3,8 +3,8 @@ package com.example.domain.local.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.local.model.ResultsModel
+import com.example.domain.local.usecase.LocalStorageUseCase
 import com.example.domain.person.model.Result
-import com.example.domain.person.usecase.GetPersonsDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocalDataScreenViewmodel @Inject constructor(
-    private val personsUseCase: GetPersonsDataUseCase
+    private val localStorageUseCase: LocalStorageUseCase
 ) : ViewModel() {
 
     private var _dbResponseList =
@@ -23,7 +23,7 @@ class LocalDataScreenViewmodel @Inject constructor(
 
     fun fetchPersonsDataFromDatabase() {
         viewModelScope.launch {
-            runCatching { personsUseCase.getAllDbMatchPerson() }
+            runCatching { localStorageUseCase.getAllDbMatchPerson() }
                 .fold({
                     _dbResponseList.emit(it)
                 }, {
@@ -36,7 +36,7 @@ class LocalDataScreenViewmodel @Inject constructor(
     fun removeUserFromLocalDb(user: Result) {
         viewModelScope.launch {
             runCatching {
-                personsUseCase.removePersonFromDb(user)
+                localStorageUseCase.removePersonFromDb(user)
             }
             .fold(
                 {

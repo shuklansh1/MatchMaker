@@ -1,99 +1,112 @@
 package com.example.domain.person.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.common.StateViewModel
+import com.example.domain.common.UiState
+import com.example.domain.common.whenSuccess
+import com.example.domain.local.usecase.LocalStorageUseCase
 import com.example.domain.person.model.PersonResponseModel
 import com.example.domain.person.model.Result
 import com.example.domain.person.usecase.GetPersonsDataUseCase
+import com.example.domain.person.viewmodel.uiStateClass.PersonScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonsScreenViewModel @Inject constructor(
-    private val personsUseCase: GetPersonsDataUseCase
-) : ViewModel() {
-    private var _responseList =
-        MutableStateFlow<PersonResponseModel?>(PersonResponseModel(mutableListOf()))
-    val responseDataState = _responseList.asStateFlow()
+    private val personsUseCase: GetPersonsDataUseCase,
+    private val localStorageUseCase: LocalStorageUseCase
+) : StateViewModel<PersonScreenUiState>() {
 
-    private var _likedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
-    val likedUsersDataState = _likedUsers.asStateFlow()
+    fun updateUiState(
+        newListOfPersonsResponse: PersonResponseModel? = null,
+        newLikedUsers: MutableList<Result>? = null,
+        newRejectedUsers: MutableList<Result>? = null,
+    ) {
+        uiState = UiState.Success(
+            PersonScreenUiState(
+                newListOfPersonsResponse,
+                newLikedUsers,
+                newRejectedUsers
+            )
+        )
+    }
 
-    private var _rejectedUsers = MutableStateFlow<MutableList<Result>?>(mutableListOf())
-    val rejectedUsersDataState = _rejectedUsers.asStateFlow()
-
-    fun fetchPersonsData() {
+    fun fetchPersonsData(size: Int = 10) {
         viewModelScope.launch {
-            runCatching { personsUseCase.invoke() }
+            runCatching { personsUseCase.invoke(size) }
                 .fold({
-                    if (!_likedUsers.value.isNullOrEmpty() || !_rejectedUsers.value.isNullOrEmpty()) {
-                        val updatedResults = _responseList.value?.results
+                    if (!uiState.whenSuccess { likedUsers }
+                            .isNullOrEmpty() || !uiState.whenSuccess { rejectedUsers }
+                            .isNullOrEmpty()) {
+                        val updatedResults = uiState.whenSuccess { listOfPersonsResponse }?.results
                         updatedResults?.addAll(
                             it.results
                         )
                         updatedResults?.removeAll {
-                            _likedUsers.value?.contains(it) == true &&
-                                    _rejectedUsers.value?.contains(it) == true
+                            uiState.whenSuccess { likedUsers }?.contains(it) == true &&
+                                    uiState.whenSuccess { rejectedUsers }?.contains(it) == true
                         }
-                        _responseList.value = _responseList.value?.copy(
-                            results = updatedResults.orEmpty().toMutableList()
-                        ) ?: it
-                    } else {
-                        _responseList.value = it
-                    }
-                    /*if (_responseList.value?.results.orEmpty().isNotEmpty()) {
-                        personsUseCase.upsertMatchPerson(
-                            _responseList.value?.results.orEmpty()
+                        updateUiState(
+                            newListOfPersonsResponse = uiState.whenSuccess { listOfPersonsResponse }
+                                ?.copy(
+                                    results = updatedResults.orEmpty().toMutableList()
+                                ) ?: it
                         )
-                    }*/
+                    } else {
+                        updateUiState(newListOfPersonsResponse = it)
+                    }
                 }, {
-                    _responseList.emit(null)
+                    updateUiState(newListOfPersonsResponse = null)
                 })
         }
     }
 
     fun likeUser(user: Result) {
         viewModelScope.launch {
-            if (_likedUsers.value != null) {
-                _likedUsers.value?.add(user)
+            if (uiState.whenSuccess { likedUsers } != null) {
+                uiState.whenSuccess { likedUsers }?.add(user)
             } else {
-                _likedUsers.value = mutableListOf(user)
+                updateUiState(newLikedUsers = mutableListOf(user))
             }
-            var updatedResults = _responseList.value?.results.orEmpty().toMutableList()
+            var updatedResults =
+                uiState.whenSuccess { listOfPersonsResponse }?.results.orEmpty().toMutableList()
             updatedResults.removeAll { it == user }
-            _responseList.value =
-                _responseList.value?.copy(
-                    results = updatedResults
-                )
+            updateUiState(
+                newListOfPersonsResponse =
+                    uiState.whenSuccess { listOfPersonsResponse }?.copy(
+                        results = updatedResults
+                    )
+            )
             addPersonToDb(user)
-            // fetch new data
-            fetchPersonsData()
+            fetchPersonsData(1) // fetch new data
         }
     }
 
     fun addPersonToDb(user: Result) {
         viewModelScope.launch {
-            personsUseCase.addPersonToDb(user)
+            localStorageUseCase.addPersonToDb(user)
         }
     }
 
     fun rejectUser(user: Result) {
         viewModelScope.launch {
-            if (_likedUsers.value != null) {
-                _rejectedUsers.value?.add(user)
+            if (uiState.whenSuccess { likedUsers } != null) {
+                uiState.whenSuccess { rejectedUsers }?.add(user)
             } else {
-                _rejectedUsers.value = mutableListOf(user)
+                updateUiState(newRejectedUsers = mutableListOf(user))
             }
-            var updatedResults = _responseList.value?.results.orEmpty().toMutableList()
+            var updatedResults =
+                uiState.whenSuccess { listOfPersonsResponse }?.results.orEmpty().toMutableList()
             updatedResults.removeAll { it == user }
-            _responseList.value =
-                _responseList.value?.copy(
-                    results = updatedResults
-                )
-            fetchPersonsData()
+            updateUiState(
+                newListOfPersonsResponse =
+                    uiState.whenSuccess { listOfPersonsResponse }?.copy(
+                        results = updatedResults
+                    )
+            )
+            fetchPersonsData(1) // fetch new data
         }
     }
 }

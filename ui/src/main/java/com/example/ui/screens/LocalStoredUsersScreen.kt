@@ -4,10 +4,9 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,16 +37,18 @@ fun LocalStoredUsersScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchPersonsDataFromDatabase()
     }
-    Scaffold(
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+        if (localResponseDataState.value?.map {
+                it.toResultsModel()
+            }.orEmpty().isEmpty()
         ) {
+            Text("Please accept a few users to view locally stored data")
+        } else {
             LazyColumn {
                 items(localResponseDataState.value?.map {
                     it.toResultsModel()
